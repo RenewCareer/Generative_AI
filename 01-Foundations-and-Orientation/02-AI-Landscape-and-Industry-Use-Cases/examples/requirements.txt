@@ -1,2 +1,6 @@
 pandas>=2.0.0
 matplotlib>=3.8.0
+
+# To run the .ipynb notebooks yourself (optional -- they already have
+# their output saved, so you can read them without this)
+jupyter>=1.0.0

@@ -35,6 +35,8 @@ This one idea — *predict-and-sample, one token at a time* — is the thread co
 
 ## Step-by-step walkthrough
 
+> 💡 **Prefer Jupyter?** Every script below also has a `.ipynb` notebook of the same name in `examples/`, with the explanation broken into markdown cells between runnable code cells so you can read and run it one step at a time. `01_beginner_rule_based_vs_generative.ipynb` already has its output pre-run and saved, so you can read it before installing anything. Open it with `jupyter notebook` / `jupyter lab`, or directly in VS Code / Cursor if you have the Jupyter extension.
+
 1. **Read the concepts above twice.** Make sure you can draw the AI → ML → DL → GenAI nesting diagram from memory.
 2. **Run `examples/01_beginner_rule_based_vs_generative.py`.** No installs needed — pure Python. It contrasts a rule-based ("classic AI") chatbot with a simple statistical Markov-chain text generator, so you *see* the difference between hard-coded logic and next-token prediction before any ML library is involved.
 3. **Set up a virtual environment and install dependencies for example 2:**

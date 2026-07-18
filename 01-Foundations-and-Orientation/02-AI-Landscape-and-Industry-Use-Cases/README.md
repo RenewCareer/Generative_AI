@@ -43,6 +43,8 @@ A recurring decision in industry: do you call a hosted frontier model API (fast 
 
 ## Step-by-step walkthrough
 
+> 💡 **Prefer Jupyter?** Every script below also has a `.ipynb` notebook of the same name in `examples/`, with the explanation broken into markdown cells between runnable code cells, already executed and saved — including the bar chart from step 5 — so you can read the notebooks before installing anything. Open with `jupyter notebook` / `jupyter lab`, or directly in VS Code / Cursor with the Jupyter extension.
+
 1. **Read the concept tables above.** You don't need to memorize every product name — you need to recognize the *categories* (model provider vs. infra vs. vector DB vs. framework) when you encounter a new name later.
 2. **Install pandas:**
    ```bash

@@ -1,0 +1,8 @@
+# Examples 01 and 02 need nothing beyond the Python standard library.
+
+# Example 03: calls the real Anthropic API
+anthropic>=0.40.0
+
+# To run the .ipynb notebooks yourself (optional -- notebooks 1 and 2
+# already have their output saved, so you can read them without this)
+jupyter>=1.0.0

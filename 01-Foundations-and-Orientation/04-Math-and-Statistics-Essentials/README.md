@@ -20,6 +20,8 @@ Training a model means adjusting its internal numbers (parameters) to reduce a *
 
 ## Step-by-step walkthrough
 
+> 💡 **Prefer Jupyter?** Every script below also has a `.ipynb` notebook of the same name in `examples/`, with the explanation broken into markdown cells between runnable code cells, already executed and saved — including the loss-curve chart from step 5 — so you can read the notebooks before installing anything. Open with `jupyter notebook` / `jupyter lab`, or directly in VS Code / Cursor with the Jupyter extension.
+
 1. **Read the three concepts above until you can restate each one in your own words**, out loud, without looking. This is the "explain it back" checkpoint from the Track 1 README — do it now, before code.
 2. **Install dependencies:**
    ```bash

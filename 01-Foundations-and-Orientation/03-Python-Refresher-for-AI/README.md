@@ -16,6 +16,8 @@ This isn't a full Python course — it assumes you know basic syntax (variables,
 
 ## Step-by-step walkthrough
 
+> 💡 **Prefer Jupyter?** Every script below also has a `.ipynb` notebook of the same name in `examples/`, with the explanation broken into markdown cells between runnable code cells. Notebooks 1 and 2 are already executed and saved, so you can read the real output before installing anything. Open with `jupyter notebook` / `jupyter lab`, or directly in VS Code / Cursor with the Jupyter extension.
+
 1. **Set up your environment for this sub-topic:**
    ```bash
    cd 01-Foundations-and-Orientation/03-Python-Refresher-for-AI/examples

@@ -7,3 +7,7 @@ torch>=2.2.0
 
 # Example 03: Anthropic API text generation
 anthropic>=0.40.0
+
+# To run the .ipynb notebooks yourself (optional -- the beginner notebook
+# already has its output saved, so you can read it without this)
+jupyter>=1.0.0
