@@ -1,0 +1,26 @@
+industry,use_case,genai_capability,modality,maturity
+Healthcare,Summarizing clinical notes,summarization,text,Established
+Healthcare,Drafting patient communication,drafting,text,Established
+Healthcare,Medical image triage assistance,classification,image,Emerging
+Finance,Extracting data from financial filings,extraction,text,Established
+Finance,Fraud pattern narrative analysis,analysis,text,Emerging
+Finance,Personalized financial advice drafting,drafting,text,Emerging
+Legal,Contract review and clause extraction,extraction,text,Established
+Legal,Case law summarization,summarization,text,Established
+Legal,Legal brief drafting assistance,drafting,text,Emerging
+Retail,Personalized product descriptions,generation,text,Established
+Retail,Customer service chatbots,conversation,text,Established
+Retail,Virtual try-on image generation,generation,image,Emerging
+Software,Code generation,generation,code,Established
+Software,Automated code review,analysis,code,Established
+Software,Test case generation,generation,code,Established
+Marketing,Ad copy generation,generation,text,Established
+Marketing,Campaign personalization at scale,generation,text,Established
+Marketing,Social media image generation,generation,image,Emerging
+Education,Personalized tutoring,conversation,text,Emerging
+Education,Auto-generated practice questions,generation,text,Established
+Education,Automated essay feedback,analysis,text,Emerging
+Customer Support,Support ticket summarization,summarization,text,Established
+Customer Support,Voice-based support agents,conversation,audio,Emerging
+Media,Video content summarization,summarization,video,Emerging
+Media,Podcast transcription and show notes,transcription,audio,Established
