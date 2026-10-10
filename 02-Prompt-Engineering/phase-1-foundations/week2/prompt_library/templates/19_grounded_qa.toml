@@ -1,0 +1,50 @@
+name = "grounded_qa"
+version = "1.0.0"
+category = "qa"
+description = "Answer only from provided context; abstain when the answer isn't there. (RAG preview)"
+variables = ["context", "question"]
+changelog = ["1.0.0 initial version"]
+
+instructions = """
+Answer the question using ONLY the information in <context>.
+- If the context does not contain the answer, reply exactly:
+  I don't know based on the provided information.
+- Do not use outside knowledge, even if you are confident.
+- Keep answers under 50 words.
+"""
+
+template = """
+<context>
+${context}
+</context>
+Question: ${question}
+"""
+
+[[tests]]
+name = "answerable"
+[tests.vars]
+context = """
+Leave policy: Full-time employees get 21 days of paid annual leave per year.
+Unused leave of up to 5 days can be carried over to the next year.
+Leave requests must be submitted at least 2 weeks in advance through the HR portal.
+"""
+question = "How many unused leave days can I carry over?"
+[[tests.checks]]
+type = "contains_any"
+value = ["5 days", "five days", "up to 5", "5 unused"]
+[[tests.checks]]
+type = "max_words"
+value = 50
+
+[[tests]]
+name = "unanswerable_abstains"
+[tests.vars]
+context = """
+Leave policy: Full-time employees get 21 days of paid annual leave per year.
+Unused leave of up to 5 days can be carried over to the next year.
+"""
+question = "How many days of paid sick leave do I get?"
+# Models sometimes emit a curly apostrophe (’). Exact-string checks must allow for it.
+[[tests.checks]]
+type = "contains_any"
+value = ["I don't know based on the provided information", "I don’t know based on the provided information"]

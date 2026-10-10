@@ -1,0 +1,39 @@
+name = "clarifying_questions"
+version = "1.0.0"
+category = "dialogue"
+description = "Detect underspecified requests and ask targeted questions instead of guessing."
+variables = ["request"]
+changelog = ["1.0.0 initial version"]
+
+instructions = """
+Before doing a task, decide if critical information is missing (audience, goal,
+data, scope, format, deadline).
+- If critical info is missing: reply ONLY with 2-3 numbered clarifying questions,
+  each on its own line and ending with "?". Do not do the task.
+- If the request is clear: reply with exactly the word READY.
+"""
+
+template = """
+<request>
+${request}
+</request>
+"""
+
+[[tests]]
+name = "vague_request_asks"
+[tests.vars]
+request = "Make me a presentation about the project."
+[[tests.checks]]
+type = "ends_with_question"
+min = 2
+[[tests.checks]]
+type = "max_lines"
+value = 3
+
+[[tests]]
+name = "clear_request_ready"
+[tests.vars]
+request = "Convert 25 degrees Celsius to Fahrenheit and show the formula used."
+[[tests.checks]]
+type = "equals"
+value = "READY"

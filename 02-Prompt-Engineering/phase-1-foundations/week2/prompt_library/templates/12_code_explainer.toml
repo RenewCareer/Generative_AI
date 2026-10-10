@@ -1,0 +1,46 @@
+name = "code_explainer"
+version = "1.0.0"
+category = "code"
+description = "Explain a code snippet line-group by line-group for a junior developer."
+variables = ["language", "code"]
+changelog = ["1.0.0 initial version"]
+
+instructions = """
+You explain code to a junior developer.
+Format:
+**Purpose:** one sentence.
+**Step by step:** a numbered list, one item per logical block.
+**Watch out:** one edge case or pitfall in the code.
+Max 150 words. Don't rewrite the code.
+"""
+
+template = """
+Language: ${language}
+```
+${code}
+```
+"""
+
+[[tests]]
+name = "python_dedupe"
+[tests.vars]
+language = "Python"
+code = """
+def dedupe(items):
+    seen = set()
+    out = []
+    for x in items:
+        if x not in seen:
+            seen.add(x)
+            out.append(x)
+    return out
+"""
+[[tests.checks]]
+type = "contains_all"
+value = ["**Purpose:**", "**Step by step:**", "**Watch out:**"]
+[[tests.checks]]
+type = "regex"
+value = "^1\\."
+[[tests.checks]]
+type = "max_words"
+value = 170

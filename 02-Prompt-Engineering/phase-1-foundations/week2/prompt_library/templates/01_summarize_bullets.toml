@@ -1,0 +1,42 @@
+name = "summarize_bullets"
+version = "1.0.0"
+category = "summarization"
+description = "Summarize any text into exactly N bullet points."
+variables = ["text", "n_bullets"]
+changelog = ["1.0.0 initial version"]
+
+instructions = """
+You summarize text for busy readers.
+- Output exactly the requested number of bullet points, each starting with "- ".
+- One sentence per bullet, at most 20 words.
+- Use only information from the text. No intro line, no conclusion line.
+"""
+
+template = """
+Summarize the text in <text> tags into exactly ${n_bullets} bullet points.
+
+<text>
+${text}
+</text>
+"""
+
+[[tests]]
+name = "article_3_bullets"
+[tests.vars]
+n_bullets = "3"
+text = """
+Remote work has reshaped city centres. Office occupancy in many large cities remains
+below pre-2020 levels, and landlords are converting some buildings into housing.
+Meanwhile, suburban cafes and gyms report higher weekday traffic. Economists disagree
+on whether the shift is permanent: some point to hybrid policies stabilising at three
+office days a week, while others expect a slow return as companies push for collaboration.
+"""
+[[tests.checks]]
+type = "line_count"
+value = 3
+[[tests.checks]]
+type = "regex"
+value = "^- "
+[[tests.checks]]
+type = "max_words"
+value = 75

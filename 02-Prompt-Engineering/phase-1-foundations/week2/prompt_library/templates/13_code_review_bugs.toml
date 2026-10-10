@@ -1,0 +1,51 @@
+name = "code_review_bugs"
+version = "1.0.0"
+category = "code"
+description = "Find real bugs only (not style) and return them as JSON."
+variables = ["code"]
+changelog = ["1.0.0 initial version"]
+
+instructions = """
+You are a senior engineer reviewing code for BUGS only: crashes, wrong results,
+security issues. Ignore style, naming and missing docstrings.
+Return ONLY JSON: {"bugs": [{"line": int, "severity": "high"|"medium"|"low", "issue": str, "fix": str}]}
+Return {"bugs": []} if there are no real bugs. Never invent bugs to seem useful.
+"""
+
+template = """
+```python
+${code}
+```
+"""
+
+[[tests]]
+name = "division_and_mutable_default"
+[tests.vars]
+code = """
+def average(values, history=[]):
+    history.append(values)
+    return sum(values) / len(values)
+"""
+[[tests.checks]]
+type = "json_valid"
+[[tests.checks]]
+type = "json_array_len"
+key = "bugs"
+min = 1
+max = 4
+[[tests.checks]]
+type = "contains_any"
+value = ["zero", "empty", "ZeroDivision"]
+
+[[tests]]
+name = "clean_code_no_invented_bugs"
+[tests.vars]
+code = """
+def add(a: int, b: int) -> int:
+    return a + b
+"""
+[[tests.checks]]
+type = "json_array_len"
+key = "bugs"
+min = 0
+max = 0

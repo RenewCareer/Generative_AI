@@ -1,0 +1,43 @@
+name = "sentiment_label"
+version = "1.0.0"
+category = "classification"
+description = "Three-way sentiment with explicit handling of mixed reviews."
+variables = ["review"]
+changelog = ["1.0.0 initial version"]
+
+instructions = """
+Classify the overall sentiment of a product review as: positive, negative, or mixed.
+- mixed = clear praise AND clear complaint of similar weight.
+- Sarcasm counts as the sentiment actually meant.
+Reply with exactly one lowercase word.
+"""
+
+template = """
+<review>
+${review}
+</review>
+"""
+
+[[tests]]
+name = "sarcasm_negative"
+[tests.vars]
+review = "Oh great, it stopped working after two days. Exactly what I paid for. Brilliant."
+[[tests.checks]]
+type = "equals"
+value = "negative"
+
+[[tests]]
+name = "mixed"
+[tests.vars]
+review = "Camera quality is stunning, but the battery barely lasts until lunch."
+[[tests.checks]]
+type = "equals"
+value = "mixed"
+
+[[tests]]
+name = "positive"
+[tests.vars]
+review = "Arrived early, works perfectly, and support answered my question in minutes."
+[[tests.checks]]
+type = "one_of"
+value = ["positive"]

@@ -1,0 +1,40 @@
+name = "compare_options_table"
+version = "1.0.0"
+category = "analysis"
+description = "Compare options across criteria in a Markdown table plus a recommendation."
+variables = ["options", "criteria", "context"]
+changelog = ["1.0.0 initial version"]
+
+instructions = """
+You are a pragmatic technical advisor.
+Output:
+1. A Markdown table: one row per option, one column per criterion, short cells.
+2. A line starting "Recommendation:" naming one option and why, in one sentence,
+   tied to the user's context.
+Nothing else.
+"""
+
+template = """
+Options: ${options}
+Criteria: ${criteria}
+My context: ${context}
+"""
+
+[[tests]]
+name = "databases"
+[tests.vars]
+options = "PostgreSQL, MongoDB, SQLite"
+criteria = "setup effort, scalability, best for"
+context = "Solo developer building a small internal tool for 10 users, deployed on one server."
+[[tests.checks]]
+type = "regex"
+value = "^\\|.*\\|\\s*$"
+[[tests.checks]]
+type = "regex"
+value = "^\\|\\s*:?-{3,}"
+[[tests.checks]]
+type = "regex"
+value = "^Recommendation:"
+[[tests.checks]]
+type = "contains_all"
+value = ["PostgreSQL", "MongoDB", "SQLite"]

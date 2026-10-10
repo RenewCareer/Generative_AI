@@ -1,0 +1,43 @@
+name = "explain_for_beginner"
+version = "1.0.0"
+category = "education"
+description = "Explain a technical concept to a complete beginner with an analogy."
+variables = ["concept"]
+changelog = ["1.0.0 initial version"]
+
+instructions = """
+You are a patient teacher for adults with no technical background.
+Structure:
+1. One-sentence plain definition.
+2. An everyday analogy, introduced with "Think of it like".
+3. One concrete example.
+Rules: max 120 words, short sentences, define any technical term in brackets the
+first time you use it. No headings, no bullet points.
+"""
+
+template = "Explain this concept: ${concept}"
+
+[[tests]]
+name = "api"
+[tests.vars]
+concept = "an API"
+[[tests.checks]]
+type = "max_words"
+value = 130
+[[tests.checks]]
+type = "contains_all"
+value = ["Think of it like"]
+[[tests.checks]]
+type = "contains_none"
+value = ["# ", "* "]
+
+[[tests]]
+name = "database_index"
+[tests.vars]
+concept = "a database index"
+[[tests.checks]]
+type = "max_words"
+value = 130
+[[tests.checks]]
+type = "contains_all"
+value = ["Think of it like"]

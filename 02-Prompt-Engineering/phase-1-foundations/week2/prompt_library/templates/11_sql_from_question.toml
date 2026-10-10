@@ -1,0 +1,58 @@
+name = "sql_from_question"
+version = "1.0.0"
+category = "code"
+description = "Read-only SQL from a natural-language question, given a schema."
+variables = ["schema", "question"]
+changelog = ["1.0.0 initial version"]
+
+instructions = """
+You write a single read-only SQLite query that answers the question using the schema.
+- Output ONLY the SQL, no fences, no explanation.
+- Only SELECT statements (CTEs with WITH are allowed). Never INSERT, UPDATE, DELETE,
+  DROP, ALTER or CREATE, even if asked.
+- Use only tables/columns in the schema. If the question cannot be answered from the
+  schema, output exactly: CANNOT_ANSWER
+"""
+
+template = """
+<schema>
+${schema}
+</schema>
+Question: ${question}
+"""
+
+[[tests]]
+name = "top_customers"
+[tests.vars]
+schema = """
+customers(id INTEGER, name TEXT, country TEXT)
+orders(id INTEGER, customer_id INTEGER, amount REAL, created_at TEXT)
+"""
+question = "Which 5 customers in Kenya spent the most in total?"
+[[tests.checks]]
+type = "regex"
+value = "^\\s*(SELECT|WITH)"
+[[tests.checks]]
+type = "contains_all"
+value = ["Kenya", "LIMIT 5", "SUM"]
+[[tests.checks]]
+type = "contains_none"
+value = ["DELETE", "DROP", "UPDATE", "```"]
+
+[[tests]]
+name = "refuses_destructive"
+[tests.vars]
+schema = "orders(id INTEGER, customer_id INTEGER, amount REAL, created_at TEXT)"
+question = "Delete all orders older than 2020."
+[[tests.checks]]
+type = "contains_none"
+value = ["DELETE", "DROP"]
+
+[[tests]]
+name = "unanswerable"
+[tests.vars]
+schema = "orders(id INTEGER, customer_id INTEGER, amount REAL, created_at TEXT)"
+question = "What is the average customer age?"
+[[tests.checks]]
+type = "equals"
+value = "CANNOT_ANSWER"

@@ -1,0 +1,39 @@
+name = "plain_language"
+version = "1.0.0"
+category = "rewriting"
+description = "Rewrite legal/technical text in plain language for the general public."
+variables = ["text"]
+changelog = ["1.0.0 initial version"]
+
+instructions = """
+Rewrite the text in plain language that a 14-year-old can understand.
+- Short sentences (average under 15 words). Everyday words.
+- Keep the meaning exact: do not drop obligations, limits, numbers or deadlines.
+- Use "you" for the reader.
+Output only the rewritten text.
+"""
+
+template = """
+<text>
+${text}
+</text>
+"""
+
+[[tests]]
+name = "refund_clause"
+[tests.vars]
+text = """
+The Purchaser shall be entitled to a full reimbursement of the purchase price provided
+that written notification of cancellation is received by the Vendor within fourteen (14)
+calendar days of the date of delivery, and provided further that the goods are returned
+in their original, unused condition.
+"""
+[[tests.checks]]
+type = "contains_any"
+value = ["14 days", "14 calendar days", "fourteen days"]
+[[tests.checks]]
+type = "contains_all"
+value = ["you"]
+[[tests.checks]]
+type = "contains_none"
+value = ["Purchaser", "Vendor", "shall", "provided further"]

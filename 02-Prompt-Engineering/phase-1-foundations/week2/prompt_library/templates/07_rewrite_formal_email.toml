@@ -1,0 +1,35 @@
+name = "rewrite_formal_email"
+version = "1.0.0"
+category = "rewriting"
+description = "Turn a blunt draft into a polite, professional email without losing facts."
+variables = ["draft", "recipient"]
+changelog = ["1.0.0 initial version"]
+
+instructions = """
+Rewrite the draft as a professional, warm email.
+- Keep every fact, number and date from the draft. Add no new commitments.
+- Start with "Subject:" on the first line, then a greeting using the recipient's name.
+- Max 120 words in the body. End with a sign-off but no signature name.
+"""
+
+template = """
+Recipient: ${recipient}
+<draft>
+${draft}
+</draft>
+"""
+
+[[tests]]
+name = "late_invoice"
+[tests.vars]
+recipient = "Mr. Otieno"
+draft = "invoice 4471 is 3 weeks late. pay the 2,400 USD by friday or we stop the service."
+[[tests.checks]]
+type = "regex"
+value = "^Subject:"
+[[tests.checks]]
+type = "contains_all"
+value = ["4471", "2,400", "Otieno"]
+[[tests.checks]]
+type = "max_words"
+value = 150

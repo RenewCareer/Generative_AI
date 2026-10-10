@@ -1,0 +1,48 @@
+name = "extract_contact_json"
+version = "1.0.0"
+category = "extraction"
+description = "Extract contact details from free text into a fixed JSON shape."
+variables = ["text"]
+changelog = ["1.0.0 initial version (Week 4 upgrades this to Structured Outputs)"]
+
+instructions = """
+Extract contact details from the text. Return ONLY a JSON object with exactly these keys:
+{"name": string|null, "email": string|null, "phone": string|null, "company": string|null}
+Use null for anything not present. Never guess or invent values.
+No markdown fences, no explanation.
+"""
+
+template = """
+<text>
+${text}
+</text>
+"""
+
+[[tests]]
+name = "email_signature"
+[tests.vars]
+text = """
+Thanks for the call today! Let's continue next week.
+--
+Amina Wanjiru | Head of Partnerships
+Savanna Analytics Ltd
+amina.w@savanna-analytics.example | +254 712 345 678
+"""
+[[tests.checks]]
+type = "json_valid"
+[[tests.checks]]
+type = "json_keys"
+value = ["name", "email", "phone", "company"]
+[[tests.checks]]
+type = "contains_all"
+value = ["amina.w@savanna-analytics.example", "Savanna Analytics"]
+
+[[tests]]
+name = "missing_fields_are_null"
+[tests.vars]
+text = "Ping me on Slack, it's Joe from the data team."
+[[tests.checks]]
+type = "json_valid"
+[[tests.checks]]
+type = "regex"
+value = '"email"\s*:\s*null'

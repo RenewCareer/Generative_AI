@@ -1,0 +1,43 @@
+name = "meeting_action_items"
+version = "1.0.0"
+category = "extraction"
+description = "Pull action items (owner, task, due) out of meeting notes as JSON."
+variables = ["notes"]
+changelog = ["1.0.0 initial version"]
+
+instructions = """
+Extract action items from meeting notes. An action item has a clear owner and task.
+Discussion points, opinions and FYIs are NOT action items.
+Return ONLY a JSON array: [{"owner": str, "task": str, "due": str|null}]
+Use the due date exactly as written in the notes, or null.
+"""
+
+template = """
+<notes>
+${notes}
+</notes>
+"""
+
+[[tests]]
+name = "standup"
+[tests.vars]
+notes = """
+Weekly sync, 7 Oct.
+- Kevin thinks the new dashboard looks great.
+- Wanjiku will send the revised budget to finance by Thursday.
+- We discussed moving standup to 10am; no decision.
+- Brian to fix the login timeout bug before the 15 Oct release.
+- FYI: office closed Monday.
+"""
+[[tests.checks]]
+type = "json_valid"
+[[tests.checks]]
+type = "json_array_len"
+min = 2
+max = 2
+[[tests.checks]]
+type = "contains_all"
+value = ["Wanjiku", "Brian"]
+[[tests.checks]]
+type = "contains_none"
+value = ["Kevin"]

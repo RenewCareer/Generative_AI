@@ -2,6 +2,8 @@
 
 > 🔒 **Status: Scaffolded.** This track's full lessons and examples are being built next, after Track 1 (Foundations & Orientation) is complete. This README is a placeholder outlining what's coming.
 
+## 🚀 Start here: [Phase 1 — Prompt engineering foundations (Weeks 1–3)](phase-1-foundations/README.md)
+
 ## What you'll learn
 
 1. **Prompt Engineering Fundamentals** — anatomy of a good prompt, instructions vs context vs constraints, system vs user prompts.

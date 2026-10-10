@@ -1,0 +1,36 @@
+name = "tldr_one_sentence"
+version = "1.0.0"
+category = "summarization"
+description = "One-sentence TL;DR for an email or document."
+variables = ["text"]
+changelog = ["1.0.0 initial version"]
+
+instructions = """
+Write a single-sentence TL;DR (max 25 words) that states the main point and any
+action the reader must take, including deadlines. Output only the sentence.
+"""
+
+template = """
+<document>
+${text}
+</document>
+"""
+
+[[tests]]
+name = "email_with_deadline"
+[tests.vars]
+text = """
+Hi team, quick update on the Q3 offsite. The venue changed from the Riverside Hotel to
+the Lakeview Centre because of a booking conflict. Dates stay the same (12-13 Sept).
+Please update your travel bookings and confirm your dietary requirements with Sam by
+Friday 30 August. Thanks, Priya
+"""
+[[tests.checks]]
+type = "max_words"
+value = 30
+[[tests.checks]]
+type = "line_count"
+value = 1
+[[tests.checks]]
+type = "contains_any"
+value = ["30 August", "Aug 30", "August 30", "Friday"]

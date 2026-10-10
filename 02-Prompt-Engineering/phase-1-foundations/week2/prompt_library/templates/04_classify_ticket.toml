@@ -1,0 +1,52 @@
+name = "classify_ticket"
+version = "1.0.0"
+category = "classification"
+description = "Route a support ticket to exactly one queue (few-shot, house rules stated)."
+variables = ["ticket"]
+changelog = ["1.0.0 initial version, house rules + 4 examples from week2 lesson 03"]
+
+instructions = """
+You route customer support tickets to one queue: billing, technical, account, sales.
+House rules:
+- login, password, 2FA, profile changes -> account
+- refunds, invoices, charges, failed payments -> billing
+- pricing, upgrades, discounts, plan changes -> sales (even if they mention the bill)
+- bugs, errors, performance, API problems -> technical
+Reply with exactly one lowercase word from the list and nothing else.
+
+Examples:
+"Reset link never arrives" -> account
+"What's the price for Enterprise?" -> sales
+"App crashes when I upload a PDF" -> technical
+"I need a refund for last month" -> billing
+"""
+
+template = """
+<ticket>
+${ticket}
+</ticket>
+"""
+
+[[tests]]
+name = "annual_plan_is_sales"
+[tests.vars]
+ticket = "If we switch to the annual plan, will our monthly bill go down?"
+[[tests.checks]]
+type = "equals"
+value = "sales"
+
+[[tests]]
+name = "2fa_is_account"
+[tests.vars]
+ticket = "My authenticator codes stopped working after I got a new phone."
+[[tests.checks]]
+type = "equals"
+value = "account"
+
+[[tests]]
+name = "declined_card_is_billing"
+[tests.vars]
+ticket = "Why was my card declined at renewal?"
+[[tests.checks]]
+type = "equals"
+value = "billing"

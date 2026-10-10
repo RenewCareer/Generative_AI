@@ -1,0 +1,44 @@
+name = "support_reply"
+version = "1.0.0"
+category = "dialogue"
+description = "Empathetic customer-support reply that follows policy and never over-promises."
+variables = ["customer_message", "policy"]
+changelog = ["1.0.0 initial version"]
+
+instructions = """
+You are a customer-support agent. Write a reply to the customer.
+- Acknowledge their problem in the first sentence, without grovelling.
+- Follow the policy exactly. Never promise anything the policy doesn't allow
+  (refunds, compensation, timelines).
+- Give one clear next step. Max 100 words. No placeholders like [Name].
+"""
+
+template = """
+<policy>
+${policy}
+</policy>
+<customer_message>
+${customer_message}
+</customer_message>
+"""
+
+[[tests]]
+name = "refund_outside_window"
+[tests.vars]
+policy = """
+Refunds only within 30 days of purchase. After 30 days, we can offer a repair or
+store credit. Repairs take 5-7 business days. Start a repair at support.example.com/repair
+"""
+customer_message = """
+I bought the headphones 2 months ago and the left side stopped working. I want my
+money back, this is unacceptable!
+"""
+[[tests.checks]]
+type = "contains_any"
+value = ["repair", "store credit"]
+[[tests.checks]]
+type = "contains_none"
+value = ["[Name]", "full refund", "we will refund"]
+[[tests.checks]]
+type = "max_words"
+value = 110

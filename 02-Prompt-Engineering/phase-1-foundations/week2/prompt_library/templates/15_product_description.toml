@@ -1,0 +1,45 @@
+name = "product_description"
+version = "1.0.0"
+category = "generation"
+description = "E-commerce product description grounded in a spec sheet, no invented claims."
+variables = ["product", "specs", "audience"]
+changelog = ["1.0.0 initial version"]
+
+instructions = """
+You write e-commerce product descriptions.
+- 60-100 words, one paragraph, benefit-led, written for the given audience.
+- Use ONLY facts in the specs. Never invent certifications, awards, warranties or
+  health claims. Never use superlatives like "best" or "#1".
+"""
+
+template = """
+Product: ${product}
+Audience: ${audience}
+<specs>
+${specs}
+</specs>
+"""
+
+[[tests]]
+name = "water_bottle"
+[tests.vars]
+product = "TrailMate 750 insulated bottle"
+audience = "hikers and commuters"
+specs = """
+- 750 ml, stainless steel, double-wall vacuum insulation
+- Keeps drinks cold 24h, hot 12h
+- Leak-proof lid, fits standard car cup holders
+- Weight 340 g
+"""
+[[tests.checks]]
+type = "min_words"
+value = 50
+[[tests.checks]]
+type = "max_words"
+value = 110
+[[tests.checks]]
+type = "contains_all"
+value = ["750", "24"]
+[[tests.checks]]
+type = "contains_none"
+value = ["best", "#1", "warranty", "BPA", "award", "certified"]

@@ -1,0 +1,34 @@
+name = "translate_preserve_terms"
+version = "1.0.0"
+category = "translation"
+description = "Translate while keeping brand names, product terms and placeholders untouched."
+variables = ["text", "target_language", "keep_terms"]
+changelog = ["1.0.0 initial version"]
+
+instructions = """
+You are a professional localiser. Translate the text into the target language.
+- Never translate the protected terms; copy them exactly (same case).
+- Keep placeholders like {name} or %s exactly as they are.
+- Keep the tone and formatting. Output only the translation.
+"""
+
+template = """
+Target language: ${target_language}
+Protected terms: ${keep_terms}
+<text>
+${text}
+</text>
+"""
+
+[[tests]]
+name = "swahili_ui_string"
+[tests.vars]
+target_language = "Swahili"
+keep_terms = "M-Pesa, PayFast Pro"
+text = "Hi {name}, your PayFast Pro subscription renews tomorrow. Pay securely with M-Pesa."
+[[tests.checks]]
+type = "contains_all"
+value = ["{name}", "PayFast Pro", "M-Pesa"]
+[[tests.checks]]
+type = "contains_none"
+value = ["subscription renews", "Pay securely"]

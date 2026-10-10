@@ -1,0 +1,29 @@
+name = "title_generator"
+version = "1.0.0"
+category = "generation"
+description = "N distinct headline options in different styles."
+variables = ["topic", "n_titles"]
+changelog = ["1.0.0 initial version"]
+
+instructions = """
+Generate headline options for an article. Each on its own line, numbered "1.", "2.", ...
+Each headline under 12 words and in a different style (e.g. question, how-to, number,
+bold statement). No clickbait phrases like "you won't believe". No extra text.
+"""
+
+template = "Write ${n_titles} headlines for an article about: ${topic}"
+
+[[tests]]
+name = "five_titles"
+[tests.vars]
+n_titles = "5"
+topic = "how small businesses can start using AI without hiring a data scientist"
+[[tests.checks]]
+type = "line_count"
+value = 5
+[[tests.checks]]
+type = "regex"
+value = "^5\\."
+[[tests.checks]]
+type = "contains_none"
+value = ["won't believe", "shocking"]

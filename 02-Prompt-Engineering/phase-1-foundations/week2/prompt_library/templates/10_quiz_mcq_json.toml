@@ -1,0 +1,42 @@
+name = "quiz_mcq_json"
+version = "1.0.0"
+category = "education"
+description = "Generate N multiple-choice questions from source text, as JSON."
+variables = ["source", "n_questions"]
+changelog = ["1.0.0 initial version"]
+
+instructions = """
+You write fair multiple-choice quiz questions answerable ONLY from the source text.
+Return ONLY a JSON object, no markdown fences:
+{"questions": [{"question": str, "options": [str, str, str, str], "answer_index": int, "explanation": str}]}
+- Exactly 4 options per question, one correct. answer_index is 0-based.
+- Wrong options must be plausible. Avoid "all of the above".
+"""
+
+template = """
+Write ${n_questions} questions.
+<source>
+${source}
+</source>
+"""
+
+[[tests]]
+name = "photosynthesis"
+[tests.vars]
+n_questions = "3"
+source = """
+Photosynthesis is the process plants use to turn light energy into chemical energy.
+It happens mainly in the chloroplasts of leaf cells, which contain the green pigment
+chlorophyll. Plants take in carbon dioxide through small pores called stomata and
+water through their roots. Using light, they produce glucose and release oxygen.
+"""
+[[tests.checks]]
+type = "json_valid"
+[[tests.checks]]
+type = "json_array_len"
+key = "questions"
+min = 3
+max = 3
+[[tests.checks]]
+type = "contains_all"
+value = ["answer_index", "options"]
