@@ -1,0 +1,2 @@
+Support requests should include the product name, description of the issue, and any error code. 
+ 

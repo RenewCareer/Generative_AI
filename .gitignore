@@ -1,0 +1,62 @@
+# ---------- Virtual environments ----------
+.venv/
+venv/
+env/
+ENV/
+myenv/
+virtual_*/
+gen_ai/
+**/pyvenv.cfg
+
+# ---------- Secrets ----------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ---------- Python caches / build ----------
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ---------- Jupyter ----------
+.ipynb_checkpoints/
+
+# ---------- Editors / tools ----------
+.claude/
+.vscode/
+.idea/
+*.swp
+
+# ---------- OS ----------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---------- Large data / model files ----------
+# GitHub rejects files over 100 MB
+01-Foundations-and-Orientation/01-Introduction-to-AI-and-GenAI/00_Python_Intro_to_GenAI/09_Pandas/json_data.json
+**/data/MNIST/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.bin
+*.h5
+*.onnx
+
+# ---------- Nested git repos (cloned separately) ----------
+01-Foundations-and-Orientation/01-Introduction-to-AI-and-GenAI/00_Python_Intro_to_GenAI/Assignment_1/
+01-Foundations-and-Orientation/01-Introduction-to-AI-and-GenAI/00_Python_Intro_to_GenAI/Assignment_2/
+01-Foundations-and-Orientation/01-Introduction-to-AI-and-GenAI/00_Python_Intro_to_GenAI/solution/assignment-002-Desmondonam/
+01-Foundations-and-Orientation/01-Introduction-to-AI-and-GenAI/00_Python_Intro_to_GenAI/solution_Assignment/assignment-001-Desmondonam/
+01-Foundations-and-Orientation/resources/GenAI_ML/
+02-Prompt-Engineering/environments/

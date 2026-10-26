@@ -1,0 +1,2 @@
+This is the content that I have written from the python to this file
+ This is, New line, this is a new line
