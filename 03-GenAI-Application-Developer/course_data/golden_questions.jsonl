@@ -1,0 +1,20 @@
+{"id": "q01", "question": "How many days do customers have to return an item?", "doc_id": "refund_policy", "must_include": ["30 days"]}
+{"id": "q02", "question": "Can gift cards be refunded?", "doc_id": "refund_policy", "must_include": ["final sale"]}
+{"id": "q03", "question": "When is a refund paid after the warehouse receives the item?", "doc_id": "refund_policy", "must_include": ["5 business days"]}
+{"id": "q04", "question": "How long does express delivery take?", "doc_id": "shipping_policy", "must_include": ["1 to 2 business days"]}
+{"id": "q05", "question": "What order value qualifies for free standard delivery?", "doc_id": "shipping_policy", "must_include": ["75 dollars"]}
+{"id": "q06", "question": "What does error code SHP-404 mean?", "doc_id": "shipping_policy", "must_include": ["not scanned"]}
+{"id": "q07", "question": "How long is the warranty on electronics?", "doc_id": "warranty", "must_include": ["2 year"]}
+{"id": "q08", "question": "Does the warranty cover water damage?", "doc_id": "warranty", "must_include": ["water damage"]}
+{"id": "q09", "question": "How long does the Aurora X2 battery last?", "doc_id": "product_faq", "must_include": ["40 hours"]}
+{"id": "q10", "question": "What does error code NB-17 mean?", "doc_id": "product_faq", "must_include": ["Wi-Fi"]}
+{"id": "q11", "question": "How do I reset the Nimbus speaker?", "doc_id": "product_faq", "must_include": ["15 seconds"]}
+{"id": "q12", "question": "How many days of paid annual leave do employees receive?", "doc_id": "leave_policy", "must_include": ["24 days"]}
+{"id": "q13", "question": "When is a doctor's note required for sick leave?", "doc_id": "leave_policy", "must_include": ["3 consecutive days"]}
+{"id": "q14", "question": "What is the daily limit for meal expenses?", "doc_id": "expense_policy", "must_include": ["60 dollars"]}
+{"id": "q15", "question": "What is the hotel limit per night?", "doc_id": "expense_policy", "must_include": ["180 dollars"]}
+{"id": "q16", "question": "When is business class allowed on flights?", "doc_id": "expense_policy", "must_include": ["8 hours"]}
+{"id": "q17", "question": "What is the minimum password length?", "doc_id": "security_policy", "must_include": ["14 characters"]}
+{"id": "q18", "question": "How quickly must security incidents be reported?", "doc_id": "security_policy", "must_include": ["1 hour"]}
+{"id": "q19", "question": "What goodwill credit can support agents issue without approval?", "doc_id": "support_handbook", "must_include": ["50 dollars"]}
+{"id": "q20", "question": "When are tickets escalated to a team lead?", "doc_id": "support_handbook", "must_include": ["2 failed"]}

@@ -1,0 +1,7 @@
+{
+  "name": "genai-course-decks",
+  "private": true,
+  "description": "Generates the presentation.pptx in each course folder",
+  "scripts": { "build": "node build_decks.js" },
+  "dependencies": { "pptxgenjs": "^4.0.1", "jszip": "^3.10.1" }
+}

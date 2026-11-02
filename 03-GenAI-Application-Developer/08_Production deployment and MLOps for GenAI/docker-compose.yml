@@ -1,0 +1,33 @@
+# Run from this folder:  docker compose up --build
+# API: http://localhost:8080/docs    Prometheus: http://localhost:9090
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: "08_Production deployment and MLOps for GenAI/Dockerfile"
+    image: genai-service:1.0.0
+    ports:
+      - "8080:8080"
+    env_file:
+      - path: ../.env
+        required: false
+    environment:
+      DAILY_BUDGET_USD: "10"
+      LOG_LEVEL: "INFO"
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+
+  prometheus:
+    image: prom/prometheus:v3.5.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+      - api

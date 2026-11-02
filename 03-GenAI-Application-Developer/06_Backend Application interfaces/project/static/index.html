@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Acme Assistant</title>
+<style>
+  :root { --bg: #f4f7f7; --panel: #ffffff; --ink: #14262b; --muted: #5b6f75; --brand: #0f766e; --line: #d8e2e3; --user: #0f766e; --user-ink: #ffffff; --bot: #e9f1f1; --error: #b42318; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0e1a1d; --panel: #15252a; --ink: #e8f0f1; --muted: #9bb0b5; --brand: #2dd4bf; --line: #27393e; --user: #0f766e; --user-ink: #ffffff; --bot: #1d3137; --error: #fda29b; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 760px; height: 100dvh; margin: 0 auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+  header { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; }
+  h1 { margin: 0; font-size: 20px; }
+  label { color: var(--muted); font-size: 14px; }
+  input, textarea, button { font: inherit; color: inherit; border-radius: 8px; border: 1px solid var(--line); background: var(--panel); padding: 8px 12px; }
+  #key { width: 130px; margin-left: 6px; }
+  #log { flex: 1; overflow-y: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+  .msg { max-width: 85%; padding: 8px 12px; border-radius: 12px; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .user { align-self: flex-end; background: var(--user); color: var(--user-ink); }
+  .assistant { align-self: flex-start; background: var(--bot); }
+  .error { align-self: stretch; color: var(--error); font-size: 14px; }
+  form { display: flex; gap: 8px; }
+  textarea { flex: 1; resize: none; }
+  button { background: var(--brand); color: var(--panel); font-weight: 600; border: none; cursor: pointer; padding: 8px 20px; }
+  button:disabled { opacity: .55; cursor: wait; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Acme Assistant</h1>
+    <label>API key <input id="key" value="dev-key-123" autocomplete="off"></label>
+  </header>
+  <div id="log" role="log" aria-live="polite"></div>
+  <form id="form">
+    <textarea id="input" rows="2" placeholder="Ask something, then press Send" aria-label="Your message" required></textarea>
+    <button id="send">Send</button>
+  </form>
+</main>
+<script>
+  const log = document.getElementById("log");
+  const input = document.getElementById("input");
+  const send = document.getElementById("send");
+  const history = [];
+
+  function add(kind, text) {
+    const node = document.createElement("div");
+    node.className = "msg " + kind;
+    node.textContent = text;
+    log.append(node);
+    log.scrollTop = log.scrollHeight;
+    return node;
+  }
+
+  async function ask() {
+    const text = input.value.trim();
+    if (!text) return;
+    input.value = "";
+    send.disabled = true;
+    add("user", text);
+    history.push({ role: "user", content: text });
+    const bubble = add("assistant", "");
+    let reply = "";
+
+    try {
+      const response = await fetch("/v1/chat/stream", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-API-Key": document.getElementById("key").value },
+        body: JSON.stringify({ messages: history }),
+      });
+      if (!response.ok) {
+        const problem = await response.json();
+        throw new Error(problem.detail || "Request failed");
+      }
+      const reader = response.body.pipeThrough(new TextDecoderStream()).getReader();
+      let buffer = "";
+      for (;;) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        buffer += value;
+        const events = buffer.split("\n\n");
+        buffer = events.pop();
+        for (const event of events) {
+          if (!event.startsWith("data: ")) continue;
+          const data = JSON.parse(event.slice(6));
+          if (data.error) throw new Error(data.error);
+          if (data.delta) {
+            reply += data.delta;
+            bubble.textContent = reply;
+            log.scrollTop = log.scrollHeight;
+          }
+        }
+      }
+      history.push({ role: "assistant", content: reply });
+    } catch (error) {
+      bubble.remove();
+      history.pop();
+      add("error", error.message);
+    } finally {
+      send.disabled = false;
+      input.focus();
+    }
+  }
+
+  document.getElementById("form").addEventListener("submit", (event) => { event.preventDefault(); ask(); });
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && !event.shiftKey) { event.preventDefault(); ask(); }
+  });
+</script>
+</body>
+</html>

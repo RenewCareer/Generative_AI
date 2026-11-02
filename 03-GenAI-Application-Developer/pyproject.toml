@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "genai-kit"
+version = "1.0.0"
+description = "Shared building blocks for the GenAI Application Developer track"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "openai>=3.42",
+    "anthropic>=2.3",
+    "pydantic>=2.14",
+    "python-dotenv>=1.2",
+    "numpy>=2.0",
+]
+
+[tool.setuptools]
+packages = ["genai_kit"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

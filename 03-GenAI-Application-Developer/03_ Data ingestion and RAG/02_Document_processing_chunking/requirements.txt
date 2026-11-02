@@ -1,0 +1,9 @@
+pymupdf
+python-docx
+beautifulsoup4
+lxml
+requests
+pillow
+pandas
+openpyxl
+pydantic

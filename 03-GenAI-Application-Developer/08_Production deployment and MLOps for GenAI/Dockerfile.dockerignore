@@ -1,0 +1,8 @@
+# Docker reads this file because it sits next to the Dockerfile and shares its name.
+**
+!genai_kit/**
+!course_data/**
+!08_Production deployment and MLOps for GenAI/project/**
+!08_Production deployment and MLOps for GenAI/requirements-service.txt
+**/__pycache__
+**/.env

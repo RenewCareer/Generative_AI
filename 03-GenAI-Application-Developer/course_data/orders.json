@@ -1,0 +1,6 @@
+[
+  {"order_id": "A-1001", "customer": "Sam Rivera", "status": "delivered", "item": "Aurora X2", "total": 149.0, "delivered_days_ago": 12},
+  {"order_id": "A-1002", "customer": "Lee Chen", "status": "in_transit", "item": "Nimbus speaker", "total": 89.0, "delivered_days_ago": null},
+  {"order_id": "A-1003", "customer": "Ana Costa", "status": "delivered", "item": "Terra band", "total": 59.0, "delivered_days_ago": 45},
+  {"order_id": "A-1004", "customer": "Noor Haddad", "status": "processing", "item": "Aurora X2", "total": 149.0, "delivered_days_ago": null}
+]

@@ -1,0 +1,48 @@
+# A template. To activate it, copy this to .github/workflows/genai-ci.yml at the repo root,
+# and set "working-directory" below to where this track lives in your repository.
+name: genai-ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 03-GenAI-Application-Developer
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: pip install -r requirements.txt && pip install -e .
+
+      - name: Unit tests and lessons (offline, no API keys)
+        run: python scripts/check_all.py
+        env:
+          LLM_PROVIDER: mock
+
+      - name: Evaluation gate (blocks the merge if quality drops)
+        working-directory: "03-GenAI-Application-Developer/07_Evaluations security and reliability"
+        run: python project/evaluate.py
+        env:
+          LLM_PROVIDER: mock
+
+  image:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the container image
+        working-directory: 03-GenAI-Application-Developer
+        run: docker build -f "08_Production deployment and MLOps for GenAI/Dockerfile" -t genai-service:${{ github.sha }} .
+      - name: Scan the image for known vulnerabilities
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: genai-service:${{ github.sha }}
+          exit-code: "1"
+          severity: CRITICAL
